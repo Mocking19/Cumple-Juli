@@ -1,0 +1,7 @@
+# settings.py
+
+SCREEN_WIDTH = 640
+SCREEN_HEIGHT = 480
+FPS = 60
+
+TILE_SIZE = 32
