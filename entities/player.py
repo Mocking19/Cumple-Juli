@@ -45,7 +45,7 @@ class Player:
         self.base_speed = 4
         self.speed = self.base_speed
 
-        self.base_damage = 1
+        self.base_damage = 10
         self.attack_damage = self.base_damage
 
         self.base_max_hp = 20

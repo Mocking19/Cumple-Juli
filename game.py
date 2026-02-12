@@ -229,8 +229,13 @@ class Game:
             self.pending_final_dialogue = True
 
             if self.revived_once:
-                self.final_text = "FINAL: Pacto de Sangre"
-                self.dialogue.start([
+                    self.final_text = """FINAL: Pacto de Sangre
+                    Porque vos salvas mi mundo, 
+                    todos los dias sos mi heroína 
+                    y nunca fue mi elección 
+                    Te amo, Feliz Cumpleaños.
+                    """                
+                    self.dialogue.start([
                     ("Juli","Terminó... pero el precio fue alto, usé mucho de tu poder.","juli"),
                     ("Astor","El poder siempre exige algo a cambio.","astor"),
                     ("Juli","Gracias por volver.","juli"),
@@ -306,6 +311,15 @@ class Game:
             else:
                 self.running = False
 
+    def draw_multiline_centered(self, text, font, color, center_x, start_y, line_spacing=10):
+        lines = text.split("\n")
+        for i, line in enumerate(lines):
+            if line.strip() == "":
+                continue  # permite líneas vacías
+
+            surface = font.render(line.strip(), True, color)
+            rect = surface.get_rect(center=(center_x, start_y + i * (font.get_height() + line_spacing)))
+            self.screen.blit(surface, rect)
 
 
 
@@ -380,20 +394,23 @@ class Game:
             font_big = pygame.font.Font(None, 64)
             font_small = pygame.font.Font(None, 28)
 
-            text = font_big.render(self.final_text, True, (220,220,220))
-            hint = font_small.render("Presiona ENTER para volver a jugar", True, (160,160,160))
-
-            self.screen.blit(
-                text,
-                (SCREEN_WIDTH//2 - text.get_width()//2,
-                SCREEN_HEIGHT//2 - 40)
+            # Dibujar texto multilínea centrado
+            self.draw_multiline_centered(
+                self.final_text,
+                font_big,
+                (220,220,220),
+                SCREEN_WIDTH // 2,
+                SCREEN_HEIGHT // 2 - 80
             )
+
+            hint = font_small.render("Presiona ENTER para volver a jugar", True, (160,160,160))
 
             self.screen.blit(
                 hint,
                 (SCREEN_WIDTH//2 - hint.get_width()//2,
-                SCREEN_HEIGHT//2 + 30)
+                SCREEN_HEIGHT//2 + 100)
             )
+
 
         pygame.display.flip()
 
